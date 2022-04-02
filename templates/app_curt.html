@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+        <!-- Basic Page Needs -->
+    <meta charset="utf-8">
+    <title>MCP3008 PIN01 current Data</title>
+    <meta name="description" content="MCP3008 ADC DATA READING">
+    <meta name="author" content="John Dereck S. Timbreza">
+        <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- FONT -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <!-- Skeleton -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='skeleton.css')}}">
+        <!-- CSS -->
+        <!-- Favicon -->
+    <link rel="icon" type="image/png" href="static/images/favicon.png">
+
+</head>
+    <body>
+    {% include "MCP3008.html" %}
+    {% block content %}{% endblock %}
+    </body>
+</html>
