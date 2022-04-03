@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
 
         <!-- Basic Page Needs -->
@@ -12,37 +12,44 @@
         <!-- FONT -->
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
         <!-- Skeleton -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='skeleton.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css')}}">
         <!-- CSS -->
         <!-- Favicon -->
-    <link rel="icon" type="image/png" href="static/images/favicon.png">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png')}}">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='a-button-30.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
 
+    <script data-require="angular.js@1.4.8" data-semver="1.4.8" src="https://code.angularjs.org/1.4.8/angular.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/Controller.js') }}"></script>
+
 </head>
 <body>
-    <main>
-        <section class="glass">
-            <h1 id="title-name">Socket Control Demo</h1>
-            <div id="layout">
-                <div class="item">
-                    <h2>Off</h2>
-                    <div class="button">
-                        <a href="h" class="button-30" role="button">Turn off</a>
-                    </div>
-                </div>
-                <div class="item">
-                    <h2>On</h2>
-                    <div class="button">
-                        <a href="h" class="button-30" role="button">Turn on</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <div class="shape-01"></div>
-    <div class="shape-02"></div>
+    <div ng-controller="RelaysController">
+        <div>
+            <h1 ng-bind="header"></h1>
+    </div>
+        <div>
+            <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in relays">
+                    <td class="vert-align">
+                        <b ng-bind="item.name"</b>
+                    </td>
+                    <td class="vert-align">
+                        <img ng-src=[[item.image]] ng-click="toggleRelay(item)">
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

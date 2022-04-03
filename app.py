@@ -6,9 +6,6 @@ import time
 from outlet import outlet
 from flask import Flask, request, render_template, redirect, url_for
 
-
-wp.mcp3004Setup(97, 0)
-
 app = Flask(__name__)
 app.register_blueprint(outlet, url_prefix="")
 

@@ -2,7 +2,7 @@ import wiringpi as wp
 from flask import Blueprint, jsonify, abort, request, render_template
 from relaydefinitions import relays, relayIdToPin
 
-outlet = Blueprint("outlet", __name__, static_folder="static", template_folder="template")
+outlet = Blueprint("outlet", __name__, static_folder="static", template_folder="templates")
 
 PIN_OFFSET = 65
 
@@ -13,8 +13,8 @@ wp.wiringPiSetup()
 wp.mcp23017Setup(PIN_OFFSET, I2C_ADDR_01)
 
 relayStateToWiringPiState = {
-    'off'   : 0,
-    'on'    : 1
+    'off'   : 1,
+    'on'    : 0
     }
 
 for relay in relays:
@@ -25,15 +25,27 @@ for relay in relays:
 def UpdatePinFromRelayObject(relay):
     wp.digitalWrite(relayIdToPin[relay['id']], relayStateToWiringPiState[relay['state']])
 
+@outlet.route('/', methods=['GET'])
+def index():
+    return render_template('index.html');
 
-@outlet.route('/WebRelay/api/relays', methods=['GET'])
+
+@outlet.route('/api/relays', methods=['GET'])
 def get_relays():
     return jsonify({'relays' : relays})
 
 
-@outlet.route('/WebRelay/api/relays/<int:relay_id>', methods=['PUT'])
+@outlet.route('/api/relays/<int:relay_id>', methods=['GET'])
+def get_relay(relay_id):
+    matchingRelays = [relay for relay in relays if relay['id'] == relay_id]
+    if len(matchingRelays) == 0:
+        abort(404)
+    return jsonify({'relay': matchingRelays[0]})
+
+
+@outlet.route('/api/relays/<int:relay_id>', methods=['PUT'])
 def update_relay(relay_id):
-    matchingRelays = [relay for relay in relays in relay['id'] == relay_id]
+    matchingRelays = [relay for relay in relays if relay['id'] == relay_id]
 
     if len(matchingRelays) == 0:
         abort(404)
@@ -44,4 +56,5 @@ def update_relay(relay_id):
 
     relay = matchingRelays[0]
     relay['state'] = request.json.get('state')
+    UpdatePinFromRelayObject(relay)
     return jsonify({'relay': relay})
