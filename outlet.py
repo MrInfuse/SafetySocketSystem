@@ -1,5 +1,6 @@
+import time
 import wiringpi as wp
-from flask import Blueprint, jsonify, abort, request, render_template
+from flask import Blueprint, jsonify, abort, request, url_for, render_template
 from relaydefinitions import relays, relayIdToPin
 
 outlet = Blueprint("outlet", __name__, static_folder="static", template_folder="templates")
@@ -27,7 +28,9 @@ def UpdatePinFromRelayObject(relay):
 
 @outlet.route('/', methods=['GET'])
 def index():
-    return render_template('index.html');
+    ip_address = request.environ['REMOTE_ADDR']
+    clock = time.strftime("%a, %B %d %l:%M%p")
+    return render_template('index.html', ipa=ip_address, clock=clock);
 
 
 @outlet.route('/api/relays', methods=['GET'])

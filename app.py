@@ -10,11 +10,6 @@ app = Flask(__name__)
 app.register_blueprint(outlet, url_prefix="")
 
 
-@app.route('/')
-def hello_world():  # put application's code here
-    return "Hello World!"
-
-
 @app.route('/app_curt')
 def app_curt():
     while 1:

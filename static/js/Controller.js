@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', [])
+var myApp = angular.module('SSS', [])
     .config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('[[').endSymbol(']]');
     });
@@ -7,18 +7,16 @@ var addImageToRelayObjects = function(relayObjects) {
 	for (var i=0; i < relayObjects.length; i++) {
   		var relay = relayObjects[i];
 		if (relay.state == 'on') {
-			relay.image = '../static/images/on_button.gif';
+			relay.image = '../static/images/flash_on.png';
 		}
 		else {
-			relay.image = '../static/images/off_button.gif';		
+			relay.image = '../static/images/flash_off.png';		
 		}
   	}	
 	return relayObjects;
 };
 
 myApp.controller('RelaysController', ['$scope', '$http', function($scope, $http) {
-
-  $scope.header = 'Relay status';
   
   var getRelayInfo = function() {
     $http.get("api/relays").then(function(response) {
@@ -38,10 +36,10 @@ myApp.controller('RelaysController', ['$scope', '$http', function($scope, $http)
     $http.put("/api/relays/"+relay.id, { state : newState}).then(function(response) {
     	relay = response.data.relay;
         if (relay.state == 'on') {
-            relay.image = '../static/images/on_button.gif';
+            relay.image = '../static/images/flash_on.png';
         }
         else {
-            relay.image = '../static/images/off_button.gif';		
+            relay.image = '../static/images/flash_off.png';		
         }
         for (var i=0; i < $scope.relays.length; i++) {
             if ($scope.relays[i].id == relay.id) {
