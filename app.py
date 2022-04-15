@@ -1,14 +1,40 @@
 import sqlite3
+from turtle import delay
 import wiringpi as wp
+import serial
 import datetime
 import time
+import os
 
 from outlet import outlet
-from flask import Flask, request, render_template, redirect, url_for
+from ct import currentSensor
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 
 app = Flask(__name__)
 app.register_blueprint(outlet, url_prefix="")
+app.register_blueprint(currentSensor, url_prefix="")
 
+
+@app.route('/consumption')
+def wattsOMeter():
+    
+    # while True:
+    #     if ser.in_waiting > 0:
+    #         line = ser.readline().decode('utf-8').rstrip()
+    #         print(line)
+    return render_template('consumption.html')
+
+@app.route('/update')
+def update():
+    ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+    ser.flush()
+    
+    while True:
+        if ser.in_waiting > 0:
+            line = ser.readline().decode('utf-8').rstrip()
+            print(line)
+            data = {'ct1' : line}
+            return jsonify(data)
 
 @app.route('/app_curt')
 def app_curt():
@@ -69,5 +95,17 @@ def validate_date(d):
         return False
 
 
+@app.route('/shutdown')
+def shutdown():
+    os.system('sudo shutdown now')
+    return '<h1>Shutting Down!</h1>'
+
+
+@app.route('/reboot')
+def reboot():
+    os.system('sudo reboot')
+    return '<h1>Restarting Down!</h1>'
+
+
 if __name__ == '__main__':
-    app.run(debug=True, host='192.168.0.125')
+    app.run(debug=True, host='192.168.254.105')

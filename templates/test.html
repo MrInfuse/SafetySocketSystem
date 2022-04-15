@@ -1,0 +1,41 @@
+<div ng-controller="RelaysController">
+    <div id="layout"> 
+
+    <!-- group of button single room "ROOM 01" -->
+    <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 01' } | limitTo : 1"> <!-- Room 01 -->
+        <h4 ng-bind="item.group"></h4>
+            <div id="item" ng-repeat="item in relays | filter: { group : 'ROOM 01' }">     <!--  the image for "button toggle" -->
+                <h2 id="socketnm" ng-bind="item.name"></h2>
+                <img id="tgImg" ng-src=[[item.image]] ng-click="toggleRelay(item)">
+            </div>
+    </div>
+
+    <!-- group of button single room "ROOM 02" -->
+    <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 02' } | limitTo : 1"> <!-- Room 02 -->
+        <h4 ng-bind="item.group"></h4>
+            <div id="item" ng-repeat="item in relays | filter: { group : 'ROOM 02' }">     <!--  the image for "button toggle" -->
+                <h2 id="socketnm" ng-bind="item.name"></h2>
+                <img id="tgImg" ng-src=[[item.image]] ng-click="toggleRelay(item)" ng-top="toggleRelay(item)">
+            </div>
+    </div>
+
+    <!-- group of button single room "ROOM 03" -->
+    <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 03' } | limitTo : 1"> <!-- Room 03 -->
+        <h4 ng-bind="item.group"></h4>
+            <div id=item ng-repeat="item in relays | filter: { group : 'ROOM 03' }">     <!--  the image for "button toggle" -->
+                <h2 id="socketnm" ng-bind="item.name"></h2>
+                <img id="tgImg" ng-src=[[item.image]] ng-click="toggleRelay(item)">
+            </div>
+    </div>
+
+    <!-- group of button single room "ROOM 04" -->
+    <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 04' } | limitTo : 1"> <!-- Room 04 -->
+        <h4 ng-bind="item.group"></h4>
+            <div id="item" ng-repeat="item in relays | filter: { group : 'ROOM 04' }">     <!--  the image for "button toggle" -->
+                <h2 id=socketnm ng-bind="item.name"></h2>
+                <img id="tgImg" ng-src=[[item.image]] ng-click="toggleRelay(item)">
+            </div>
+    </div>
+
+    </div>
+    </div>

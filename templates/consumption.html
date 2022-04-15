@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SSS">
+<head>
+
+        <!-- Basic Page Needs -->
+    <meta charset="utf-8">
+    <title>MCSRAWM</title>
+    <meta name="description" content="">
+    <!-- <meta http-equiv="refresh" content="2"> -->
+    <meta name="author" content="John Dereck S. Timbreza">
+        <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- FONT -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+        <!-- Skeleton -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css')}}">
+        <!-- CSS -->
+        <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png')}}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+
+    <!-- <script data-require="angular.js@1.4.8" data-semver="1.4.8" src="https://code.angularjs.org/1.4.8/angular.js"></script> -->
+    <script data-require="angular.js@1.4.8" data-semver="1.4.8" src="{{ url_for('static', filename='js/angular-offline.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/Controller.js') }}"></script>
+
+</head>
+<body>
+    <header>
+            <img src="{{ url_for('static', filename='images/smart-plug.png') }}" alt="logo">
+            <nav>
+                <ul class="nav__links">
+                    <li><a href="{{ url_for('outlet.index') }}">Outlet</a></li>
+                    <li><a href="{{ url_for('wattsOMeter') }}">Consumption</a></li>
+                </ul>
+            </nav>
+            <div>
+                <h6>{{ ipa }}<h6>
+                <h6>{{ clock }}</h6>
+            </div>
+    </header>
+    <div ng-controller="RelaysController">
+        <div id="layout"> 
+    
+        <!-- group of button single room "ROOM 04" -->
+        <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 04' } | limitTo : 1"> <!-- Room 01 -->
+            <h4 ng-bind="item.group"></h4>
+            <div id="itemC">
+                <h2 id="socketnm" >SOCKET 08</h2>
+                <div id="test"></div>
+            </div>
+            <div id="itemC">
+                <h2 id="socketnm" >SOCKET 07</h2>
+                <div id="NA">N/A</div>
+            </div>
+        </div>
+    
+        <!-- group of button single room "ROOM 03" -->
+        <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 03' } | limitTo : 1"> <!-- Room 01 -->
+            <h4 ng-bind="item.group"></h4>
+            <div id="itemC">
+                <h2 id="socketnm" >SOCKET 06</h2>
+                <div id="NA">N/A</div>
+            </div>
+            <div id="itemC">
+                <h2 id="socketnm" >SOCKET 05</h2>
+                <div id="NA">N/A</div>
+            </div>
+        </div>
+    
+        <!-- group of button single room "ROOM 02" -->
+        <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 02' } | limitTo : 1"> <!-- Room 01 -->
+            <h4 ng-bind="item.group"></h4>
+            <div id="itemC">
+                <h2 id="socketnm" >SOCKET 04</h2>
+                <div id="NA">N/A</div>
+            </div>
+            <div id="itemC">
+                <h2 id="socketnm" >SOCKET 03</h2>
+                <div id="NA">N/A</div>
+            </div>
+        </div>
+    
+        <!-- group of button single room "ROOM 01" -->
+        <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 01' } | limitTo : 1"> <!-- Room 01 -->
+            <h4 ng-bind="item.group"></h4>
+            <div id="itemC">
+                <h2 id="socketnm" >SOCKET 02</h2>
+                <div id="NA">N/A</div>
+            </div>
+            <div id="itemC">
+                <h2 id="socketnm" >SOCKET 01</h2>
+                <div id="NA">N/A</div>
+            </div>
+        </div>
+    
+        </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+              const getSensorReading = function() {
+                fetch(`http://${location.host}/update`)  // send request to route /update
+                  .then((resp) => resp.json())
+                  .then(function(data) {
+                    document.getElementById('test').innerHTML = data.ct1.toString();
+                });
+              }
+          
+              getSensorReading();
+              setInterval(getSensorReading, 1000);  //request for update every 1 second
+            });
+        </script> 
+</body>
+
+</html>
