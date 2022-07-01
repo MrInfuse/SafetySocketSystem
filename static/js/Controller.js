@@ -15,12 +15,21 @@ var addImageToRelayObjects = function(relayObjects) {
   	}	
 	return relayObjects;
 };
-
+var addImageToTimeObjects = function(relayObjects) {
+	for (var i=0; i < relayObjects.length; i++) {
+  		var relay = relayObjects[i];
+			relay.image03m = '../static/images/32-timer-3.png';
+      relay.image10m = '../static/images/32-timer-10.png';
+      relay.image15m = '../static/images/32-timer-15.png';
+  	}	
+	return relayObjects;
+};
 myApp.controller('RelaysController', ['$scope', '$http', function($scope, $http) {
   
   var getRelayInfo = function() {
     $http.get("api/relays").then(function(response) {
       var relays = response.data.relays;
+      addImageToTimeObjects(relays)
       addImageToRelayObjects(relays)
       $scope.relays = relays;
     }, function(error) {}

@@ -35,37 +35,24 @@
                     <li><a href="{{ url_for('wattsOMeter') }}">Consumption</a></li>
                 </ul>
             </nav>
-            <div>
+            <div class="clock">
                 <h6>{{ ipa }}<h6>
                 <h6>{{ clock }}</h6>
             </div>
     </header>
     <div ng-controller="RelaysController">
         <div id="layout"> 
-    
-        <!-- group of button single room "ROOM 04" -->
-        <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 04' } | limitTo : 1"> <!-- Room 01 -->
+
+        <!-- group of button single room "ROOM 01" -->
+        <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 01' } | limitTo : 1"> <!-- Room 01 -->
             <h4 ng-bind="item.group"></h4>
             <div id="itemC">
-                <h2 id="socketnm" >SOCKET 08</h2>
-                <div id="test"></div>
+                <h2 id="socketnm" >SOCKET 01</h2>
+                <div id="CT1"></div>
             </div>
             <div id="itemC">
-                <h2 id="socketnm" >SOCKET 07</h2>
-                <div id="NA">N/A</div>
-            </div>
-        </div>
-    
-        <!-- group of button single room "ROOM 03" -->
-        <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 03' } | limitTo : 1"> <!-- Room 01 -->
-            <h4 ng-bind="item.group"></h4>
-            <div id="itemC">
-                <h2 id="socketnm" >SOCKET 06</h2>
-                <div id="NA">N/A</div>
-            </div>
-            <div id="itemC">
-                <h2 id="socketnm" >SOCKET 05</h2>
-                <div id="NA">N/A</div>
+                <h2 id="socketnm" >SOCKET 02</h2>
+                <div id="NA">0.00 W</div>
             </div>
         </div>
     
@@ -73,27 +60,16 @@
         <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 02' } | limitTo : 1"> <!-- Room 01 -->
             <h4 ng-bind="item.group"></h4>
             <div id="itemC">
-                <h2 id="socketnm" >SOCKET 04</h2>
-                <div id="NA">N/A</div>
+                <h2 id="socketnm" >SOCKET 03</h2>
+                <div id="NA">0.00 W</div>
             </div>
             <div id="itemC">
-                <h2 id="socketnm" >SOCKET 03</h2>
-                <div id="NA">N/A</div>
+                <h2 id="socketnm" >SOCKET 04</h2>
+                <div id="NA">0.00 W</div>
             </div>
         </div>
     
-        <!-- group of button single room "ROOM 01" -->
-        <div class="room" ng-repeat="item in relays | filter: { group : 'ROOM 01' } | limitTo : 1"> <!-- Room 01 -->
-            <h4 ng-bind="item.group"></h4>
-            <div id="itemC">
-                <h2 id="socketnm" >SOCKET 02</h2>
-                <div id="NA">N/A</div>
-            </div>
-            <div id="itemC">
-                <h2 id="socketnm" >SOCKET 01</h2>
-                <div id="NA">N/A</div>
-            </div>
-        </div>
+        
     
         </div>
         </div>
@@ -101,10 +77,10 @@
         <script>
             document.addEventListener("DOMContentLoaded", function(event) {
               const getSensorReading = function() {
-                fetch(`http://${location.host}/update`)  // send request to route /update
+                fetch(`http://${location.host}/ArduinoCT01`)  // send request to route /update
                   .then((resp) => resp.json())
                   .then(function(data) {
-                    document.getElementById('test').innerHTML = data.ct1.toString();
+                    document.getElementById('CT1').innerHTML = data.MCct1.toString();
                 });
               }
           

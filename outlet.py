@@ -4,6 +4,8 @@ import wiringpi as wp
 from flask import Blueprint, jsonify, abort, request, url_for, render_template
 from relaydefinitions import relays, relayIdToPin
 
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+
 outlet = Blueprint("outlet", __name__, static_folder="static", template_folder="templates")
 
 PIN_OFFSET = 65
@@ -27,7 +29,8 @@ for relay in relays:
 def UpdatePinFromRelayObject(relay):
     wp.digitalWrite(relayIdToPin[relay['id']], relayStateToWiringPiState[relay['state']])
 
-@outlet.route('/', methods=['GET'])
+@outlet.route('/home', methods=['GET'])
+@login_required
 def index():
     ip_address = request.environ['REMOTE_ADDR']
     clock = time.strftime("%a, %B %d %l:%M%p")

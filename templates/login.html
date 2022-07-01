@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/inputBox.css") }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/keyboard/keyboard.css") }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h1>Login</h1>
+    <div>
+        <img src="static/images/smart-plug.png" alt="">
+    </div>
+    
+
+    <form method="POST" action="" autocomplete="off">
+        {{ form.hidden_tag() }}
+        <div class="group"> {{ form.username(class_="use-keyboard-input") }}
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Full Name</label>
+        </div>
+        <div class="group"> {{ form.password(class_="use-keyboard-input") }}
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Password</label>
+        </div>
+        {{ form.submit }}
+    </form>
+      <p class="footer">
+          <a href="{{ url_for('register') }}">Don't have an account? Sign Up</a>
+      </p>
+</div>
+<script src="{{ url_for('static', filename='js/keyboard/Keyboard.js') }}"></script>
+</body>
+</html>

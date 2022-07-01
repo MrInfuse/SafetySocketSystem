@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>registration</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/inputBox.css") }}">
+</head>
+<body>
+<div class="container">
+    <h1>Register</h1>
+
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="group"> {{ form.username }}
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Full Name</label>
+        </div>
+        <div class="group"> {{ form.password }}
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Password</label>
+        </div>
+        {{ form.submit }}
+        {% for error in form.username.errors %}
+            <p>{{error}}</p>
+        {% endfor %}
+    </form>
+    <p class="footer">
+        <a href="{{ url_for('login') }}">Already have an account? Log In</a>
+    </p>
+</div>
+</body>
+</html>
